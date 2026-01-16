@@ -2,6 +2,7 @@ package com.kazz.cinetoo.data.repository
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import com.kazz.cinetoo.data.local.database.currentTimeMillis
 import com.kazz.cinetoo.database.CineTooDatabase
 import com.kazz.cinetoo.domain.model.FavoriteItem
 import com.kazz.cinetoo.domain.model.MediaType
@@ -47,7 +48,7 @@ class FavoritesRepositoryImpl(
                 type = type.name,
                 posterPath = posterPath,
                 title = title,
-                addedAt = System.currentTimeMillis()
+                addedAt = currentTimeMillis()
             )
         }
     }
@@ -71,7 +72,7 @@ class FavoritesRepositoryImpl(
                 id = id.toLong(),
                 type = type.name,
                 content = note,
-                updatedAt = System.currentTimeMillis()
+                updatedAt = currentTimeMillis()
             )
         }
     }

@@ -123,7 +123,7 @@ class UserPreferencesRepositoryImpl(
         return withContext(Dispatchers.Default) {
             settingsQueries.selectByKey(ONBOARDING_COMPLETED_KEY)
                 .executeAsOneOrNull()
-                ?.value == "true"
+                ?.settingValue == "true"
         }
     }
 
@@ -131,7 +131,7 @@ class UserPreferencesRepositoryImpl(
         withContext(Dispatchers.Default) {
             settingsQueries.insert(
                 key = ONBOARDING_COMPLETED_KEY,
-                value = completed.toString()
+                settingValue = completed.toString()
             )
         }
     }
