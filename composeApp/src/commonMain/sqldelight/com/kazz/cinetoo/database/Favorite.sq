@@ -1,0 +1,27 @@
+CREATE TABLE Favorite (
+    id INTEGER NOT NULL,
+    type TEXT NOT NULL,
+    posterPath TEXT,
+    title TEXT NOT NULL,
+    addedAt INTEGER NOT NULL,
+    PRIMARY KEY (id, type)
+);
+
+selectAll:
+SELECT * FROM Favorite ORDER BY addedAt DESC;
+
+selectById:
+SELECT * FROM Favorite WHERE id = ? AND type = ?;
+
+insert:
+INSERT OR REPLACE INTO Favorite(id, type, posterPath, title, addedAt)
+VALUES (?, ?, ?, ?, ?);
+
+delete:
+DELETE FROM Favorite WHERE id = ? AND type = ?;
+
+deleteAll:
+DELETE FROM Favorite;
+
+isFavorite:
+SELECT COUNT(*) > 0 FROM Favorite WHERE id = ? AND type = ?;

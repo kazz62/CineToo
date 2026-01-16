@@ -1,0 +1,20 @@
+CREATE TABLE Note (
+    id INTEGER NOT NULL,
+    type TEXT NOT NULL,
+    content TEXT NOT NULL,
+    updatedAt INTEGER NOT NULL,
+    PRIMARY KEY (id, type)
+);
+
+selectByIdAndType:
+SELECT * FROM Note WHERE id = ? AND type = ?;
+
+insert:
+INSERT OR REPLACE INTO Note(id, type, content, updatedAt)
+VALUES (?, ?, ?, ?);
+
+delete:
+DELETE FROM Note WHERE id = ? AND type = ?;
+
+deleteAll:
+DELETE FROM Note;
