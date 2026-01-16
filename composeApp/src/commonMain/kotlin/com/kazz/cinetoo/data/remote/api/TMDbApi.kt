@@ -1,8 +1,9 @@
 package com.kazz.cinetoo.data.remote.api
 
+import com.kazz.cinetoo.data.remote.dto.*
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
 
 class TMDbApi(private val httpClient: HttpClient) {
 
@@ -10,7 +11,7 @@ class TMDbApi(private val httpClient: HttpClient) {
         genreIds: List<Int>,
         platformIds: List<Int>,
         page: Int = 1
-    ): HttpResponse {
+    ): DiscoverMoviesResponseDto {
         return httpClient.get("${ApiConstants.BASE_URL}discover/movie") {
             parameter("with_genres", genreIds.joinToString(","))
             if (platformIds.isNotEmpty()) {
@@ -18,14 +19,14 @@ class TMDbApi(private val httpClient: HttpClient) {
             }
             parameter("sort_by", "popularity.desc")
             parameter("page", page)
-        }
+        }.body()
     }
 
     suspend fun discoverTVShows(
         genreIds: List<Int>,
         platformIds: List<Int>,
         page: Int = 1
-    ): HttpResponse {
+    ): DiscoverTVShowsResponseDto {
         return httpClient.get("${ApiConstants.BASE_URL}discover/tv") {
             parameter("with_genres", genreIds.joinToString(","))
             if (platformIds.isNotEmpty()) {
@@ -33,26 +34,26 @@ class TMDbApi(private val httpClient: HttpClient) {
             }
             parameter("sort_by", "popularity.desc")
             parameter("page", page)
-        }
+        }.body()
     }
 
-    suspend fun getMovieDetails(movieId: Int): HttpResponse {
+    suspend fun getMovieDetails(movieId: Int): MovieDetailsDto {
         return httpClient.get("${ApiConstants.BASE_URL}movie/$movieId") {
             parameter("append_to_response", "credits,watch/providers")
-        }
+        }.body()
     }
 
-    suspend fun getTVShowDetails(tvShowId: Int): HttpResponse {
+    suspend fun getTVShowDetails(tvShowId: Int): TVShowDetailsDto {
         return httpClient.get("${ApiConstants.BASE_URL}tv/$tvShowId") {
             parameter("append_to_response", "credits,watch/providers")
-        }
+        }.body()
     }
 
-    suspend fun getMovieGenres(): HttpResponse {
-        return httpClient.get("${ApiConstants.BASE_URL}genre/movie/list")
+    suspend fun getMovieGenres(): GenresResponseDto {
+        return httpClient.get("${ApiConstants.BASE_URL}genre/movie/list").body()
     }
 
-    suspend fun getTVGenres(): HttpResponse {
-        return httpClient.get("${ApiConstants.BASE_URL}genre/tv/list")
+    suspend fun getTVGenres(): GenresResponseDto {
+        return httpClient.get("${ApiConstants.BASE_URL}genre/tv/list").body()
     }
 }
