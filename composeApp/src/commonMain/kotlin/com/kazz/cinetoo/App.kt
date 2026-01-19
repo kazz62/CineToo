@@ -1,47 +1,76 @@
 package com.kazz.cinetoo
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import org.jetbrains.compose.resources.painterResource
-
-import cinetoo.composeapp.generated.resources.Res
-import cinetoo.composeapp.generated.resources.compose_multiplatform
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.kazz.cinetoo.presentation.navigation.Home
+import com.kazz.cinetoo.presentation.navigation.OnboardingGenres
+import com.kazz.cinetoo.presentation.navigation.OnboardingPlatforms
+import com.kazz.cinetoo.presentation.navigation.Splash
+import com.kazz.cinetoo.presentation.onboarding.OnboardingGenresScreen
+import com.kazz.cinetoo.presentation.onboarding.OnboardingPlatformsScreen
+import com.kazz.cinetoo.presentation.splash.SplashScreen
+import com.kazz.cinetoo.presentation.theme.CineTooTheme
 
 @Composable
-@Preview
 fun App() {
-    MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .safeContentPadding()
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
+    CineTooTheme {
+        val navController = rememberNavController()
+
+        NavHost(
+            navController = navController,
+            startDestination = Splash
         ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
+            composable<Splash> {
+                SplashScreen(
+                    onNavigateToOnboarding = {
+                        navController.navigate(OnboardingGenres) {
+                            popUpTo(Splash) { inclusive = true }
+                        }
+                    },
+                    onNavigateToHome = {
+                        navController.navigate(Home) {
+                            popUpTo(Splash) { inclusive = true }
+                        }
+                    }
+                )
             }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
+
+            composable<OnboardingGenres> {
+                OnboardingGenresScreen(
+                    onNavigateToNextStep = {
+                        navController.navigate(OnboardingPlatforms)
+                    }
+                )
+            }
+
+            composable<OnboardingPlatforms> {
+                OnboardingPlatformsScreen(
+                    onNavigateToHome = {
+                        navController.navigate(Home) {
+                            popUpTo(OnboardingGenres) { inclusive = true }
+                        }
+                    }
+                )
+            }
+
+            composable<Home> {
+                // TODO: Implement Home screen with bottom navigation
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+                    Text(
+                        text = "Home (Coming Soon)",
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
                 }
             }
         }

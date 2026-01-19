@@ -17,10 +17,22 @@ fun domainModule() = module {
     factory { GetFavoritesUseCase(get()) }
     factory { SaveNoteUseCase(get()) }
 
-    // User Preferences Use Cases
+    // User Preferences (legacy aggregate)
     factory { SaveUserPreferencesUseCase(get()) }
     factory { GetUserPreferencesUseCase(get()) }
+
+    // Onboarding
     factory { HasCompletedOnboardingUseCase(get()) }
+    factory { SetOnboardingCompletedUseCase(get()) }
+
+    // Genres
+    factory { GetAvailableGenresUseCase() }
+    factory { GetSelectedGenresUseCase(get()) }
+    factory { SaveSelectedGenresUseCase(get()) }
+
+    // Platforms
+    factory { GetAvailablePlatformsUseCase() }
+    factory { SaveSelectedPlatformsUseCase(get()) }
 
     // Data Management Use Cases
     factory { DeleteAllDataUseCase(get(), get()) }
