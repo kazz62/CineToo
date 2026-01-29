@@ -1,3 +1,4 @@
+import app.cash.sqldelight.gradle.VerifyMigrationTask
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -63,6 +64,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.androidx.navigation.compose)
 
             // Ktor
             implementation(libs.ktor.client.core)
@@ -72,6 +74,7 @@ kotlin {
 
             // Koin
             implementation(libs.koin.core)
+            implementation(libs.koin.compose)
 
             // SQLDelight
             implementation(libs.sqldelight.runtime)
@@ -82,6 +85,10 @@ kotlin {
 
             // Serialization
             implementation(libs.kotlinx.serialization.json)
+
+            // Coil (Image Loading)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
         }
 
         commonTest.dependencies {

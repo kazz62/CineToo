@@ -1,12 +1,11 @@
 package com.kazz.cinetoo.di
 
-import android.content.Context
 import app.cash.sqldelight.db.SqlDriver
 import com.kazz.cinetoo.data.local.database.DatabaseDriverFactory
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
 actual fun platformModule(): Module = module {
-    single<Context> { get() }
-    single<SqlDriver> { DatabaseDriverFactory(get()).createDriver() }
+    single<SqlDriver> { DatabaseDriverFactory(androidContext()).createDriver() }
 }
