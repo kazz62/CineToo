@@ -36,4 +36,10 @@ fun domainModule() = module {
 
     // Data Management Use Cases
     factory { DeleteAllDataUseCase(get(), get()) }
+
+    // Home Screen Use Cases
+    factory { GetRecommendedTitlesUseCase(get(), get()) }
+    factory { GetPopularTitlesUseCase(get()) }
+    factory { GetNewReleasesTitlesUseCase(get()) }
+    factory { GetTitlesByGenreUseCase(get()) }
 }

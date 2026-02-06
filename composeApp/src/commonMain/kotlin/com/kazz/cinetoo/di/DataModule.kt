@@ -1,6 +1,6 @@
 package com.kazz.cinetoo.di
 
-import com.kazz.cinetoo.data.remote.api.TMDbApi
+import com.kazz.cinetoo.data.remote.api.IMDbApi
 import com.kazz.cinetoo.data.remote.api.createHttpClient
 import com.kazz.cinetoo.data.repository.FavoritesRepositoryImpl
 import com.kazz.cinetoo.data.repository.MovieRepositoryImpl
@@ -18,11 +18,11 @@ fun dataModule() = module {
     // Database - Platform-specific driver will be provided by platformModule
     single { CineTooDatabase(get()) }
 
-    // HTTP Client - API Key will be provided by platform-specific module
-    single { createHttpClient(getProperty("TMDB_API_KEY")) }
+    // HTTP Client
+    single { createHttpClient() }
 
     // API
-    single { TMDbApi(get()) }
+    single { IMDbApi(get()) }
 
     // Repositories
     single<MovieRepository> { MovieRepositoryImpl(get()) }
