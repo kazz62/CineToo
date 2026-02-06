@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.kazz.cinetoo.domain.model.Genre
 import com.kazz.cinetoo.domain.usecase.GetAvailableGenresUseCase
 import com.kazz.cinetoo.domain.usecase.SaveSelectedGenresUseCase
+import com.kazz.cinetoo.domain.usecase.SetOnboardingCompletedUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -23,12 +24,13 @@ data class OnboardingGenresState(
 }
 
 sealed interface OnboardingGenresEvent {
-    data object NavigateToNextStep : OnboardingGenresEvent
+    data object NavigateToHome : OnboardingGenresEvent
 }
 
 class OnboardingGenresViewModel(
     private val getAvailableGenresUseCase: GetAvailableGenresUseCase,
-    private val saveSelectedGenresUseCase: SaveSelectedGenresUseCase
+    private val saveSelectedGenresUseCase: SaveSelectedGenresUseCase,
+    private val setOnboardingCompletedUseCase: SetOnboardingCompletedUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(OnboardingGenresState())
@@ -65,9 +67,10 @@ class OnboardingGenresViewModel(
                 .filter { it.id in _state.value.selectedGenres }
 
             saveSelectedGenresUseCase(selectedGenresList)
+            setOnboardingCompletedUseCase(true)
 
             _state.update { it.copy(isLoading = false) }
-            _events.emit(OnboardingGenresEvent.NavigateToNextStep)
+            _events.emit(OnboardingGenresEvent.NavigateToHome)
         }
     }
 }
