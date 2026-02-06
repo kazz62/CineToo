@@ -8,6 +8,6 @@ import org.koin.dsl.module
 fun presentationModule() = module {
     // ViewModels
     factory { SplashViewModel(get()) }
-    factory { OnboardingGenresViewModel(get(), get()) }
+    factory { OnboardingGenresViewModel(get(), get(), get()) }
     factory { OnboardingPlatformsViewModel(get(), get(), get()) }
 }

@@ -12,10 +12,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.kazz.cinetoo.presentation.navigation.Home
 import com.kazz.cinetoo.presentation.navigation.OnboardingGenres
-import com.kazz.cinetoo.presentation.navigation.OnboardingPlatforms
 import com.kazz.cinetoo.presentation.navigation.Splash
 import com.kazz.cinetoo.presentation.onboarding.OnboardingGenresScreen
-import com.kazz.cinetoo.presentation.onboarding.OnboardingPlatformsScreen
 import com.kazz.cinetoo.presentation.splash.SplashScreen
 import com.kazz.cinetoo.presentation.theme.CineTooTheme
 
@@ -45,14 +43,6 @@ fun App() {
 
             composable<OnboardingGenres> {
                 OnboardingGenresScreen(
-                    onNavigateToNextStep = {
-                        navController.navigate(OnboardingPlatforms)
-                    }
-                )
-            }
-
-            composable<OnboardingPlatforms> {
-                OnboardingPlatformsScreen(
                     onNavigateToHome = {
                         navController.navigate(Home) {
                             popUpTo(OnboardingGenres) { inclusive = true }

@@ -9,9 +9,6 @@ object Splash
 object OnboardingGenres
 
 @Serializable
-object OnboardingPlatforms
-
-@Serializable
 object Home
 
 @Serializable

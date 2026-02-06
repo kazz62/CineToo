@@ -43,7 +43,7 @@ import org.koin.compose.koinInject
 
 @Composable
 fun OnboardingGenresScreen(
-    onNavigateToNextStep: () -> Unit,
+    onNavigateToHome: () -> Unit,
     viewModel: OnboardingGenresViewModel = koinInject()
 ) {
     val state by viewModel.state.collectAsState()
@@ -51,7 +51,7 @@ fun OnboardingGenresScreen(
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
             when (event) {
-                OnboardingGenresEvent.NavigateToNextStep -> onNavigateToNextStep()
+                OnboardingGenresEvent.NavigateToHome -> onNavigateToHome()
             }
         }
     }
